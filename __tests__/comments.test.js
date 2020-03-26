@@ -25,6 +25,20 @@ describe('comment routes', () => {
       });
   });
 
+  it('gets top commenters', () => {
+    return request(app)
+      .get('/api/v1/comments/topCommenters')
+      .then(res => {
+        expect(res.body.length).toEqual(3);
+        expect(res.body).toContainEqual(
+          {
+            _id: expect.any(String),
+            count: expect.any(Number)
+          }
+        );
+      });
+  });
+
   it('gets a comment by id', async() => {
     const blogPost = await getBlogPost();
     const comment = await getComment({ blogPostId: blogPost._id });

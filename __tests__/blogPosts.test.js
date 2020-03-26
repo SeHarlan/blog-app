@@ -4,6 +4,32 @@ const request = require('supertest');
 const app = require('../lib/app');
 
 describe('blog Post routes', () => {
+  it('gets longest Posts', () => {
+    return request(app)
+      .get('/api/v1/blogPosts/longestPosts')
+      .then(res => {
+        expect(res.body.length).toEqual(10);
+        expect(res.body).toContainEqual({
+          _id: expect.any(String),
+          author: expect.any(String),
+          text:expect.any(String),
+          textLength: expect.any(Number)
+        });
+      });
+  });
+  it('gets most Commented', () => {
+    return request(app)
+      .get('/api/v1/blogPosts/mostCommented')
+      .then(res => {
+        expect(res.body.length).toEqual(10);
+        expect(res.body).toContainEqual({
+          _id: expect.any(String),
+          author: expect.any(String),
+          text: expect.any(String),
+          totalComments: expect.any(Number)
+        });
+      });
+  });
   it('creates a blog Post', () => {
     return request(app)
       .post('/api/v1/blogPosts')
